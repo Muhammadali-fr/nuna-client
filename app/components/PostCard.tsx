@@ -21,8 +21,8 @@ const PostCard = ({ image, name, likes, comments }: PostCardProps) => {
           <span className="text-md font-[robomed]">n#{name}</span>
         </div>
         <p>
-          title of the post that wwerwewas posted to community by ordinary user who
-          followed to this community by changing select in post page
+          title of the post that wwerwewas posted to community by ordinary user
+          who followed to this community by changing select in post page
         </p>
       </div>
 
