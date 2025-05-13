@@ -23,20 +23,10 @@ const LoginForm = () => {
             We will send a magic link to your email, just click it.
           </p>
 
-<<<<<<< HEAD
           <form onSubmit={handelSubmit} method="POST" className="w-1/2 mb-4">
             <label htmlFor="email" className="block">
               <span className="mb-2 text-gray-500 block">Your email</span>
               <div className="flex items-center bg-gray-800 rounded-md px-4 space-x-4">
-=======
-          <form method="POST" className="w-1/2 mb-4">
-            <label htmlFor="name">
-              <span className="mb-1.5 text-[#8C8998]">your email</span>
-
-              <section className="bg-[#1B1B2D] flex items-center rounded-md space-x-4 px-4">
-                {/* can you use lucide icons becouse of this image there alot of problems happening   */}
-                <Image src={emailicon} width={24} height={24} alt="user icon" />
->>>>>>> 151fc2958830f621cbf2cb25d21ab3a1928af484
                 <Mail />
                 <input
                   id="email"
