@@ -24,11 +24,8 @@ const LoginForm = () => {
 
               <section className="bg-[#1B1B2D] flex items-center rounded-md space-x-4 px-4">
                 {/* can you use lucide icons becouse of this image there alot of problems happening   */}
-<<<<<<< HEAD
                 <Image src={emailicon} width={24} height={24} alt="user icon" />
-=======
                 <Mail />
->>>>>>> 320f8c1a0430680f0ce33abf3767e7a2ae1551b8
                 <input
                   className="h-12 w-full"
                   id="name"
