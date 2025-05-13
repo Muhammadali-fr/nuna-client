@@ -4,14 +4,19 @@ import Image from "next/image";
 // icons
 import bannerbg from "@/app/icons/banner-bg.png";
 import userprph from "@/app/icons/user-pr-ph.jpg";
-import { ArrowBigUp, Link, MessageSquare } from "lucide-react";
-import { usePathname } from "next/navigation";
 import PostCard from "@/app/reuseable/PostCard";
+
+// useRouter
+import { useRouter } from "next/router";
+import { use } from "react";
 
 // components
 import HomeHeader from "@/app/reuseable/HomeHeader";
 
-const page = () => {
+const page = ({ params }:  { params: Promise<{ username: string }> }) => {
+
+const {username} = use(params);
+
   return (
     <div className="">
       {/* user profile and banner */}
@@ -41,7 +46,7 @@ const page = () => {
         </h2>
 
         <p className="text-base font-[roboregular] text-blue-400 ">
-          @boburov.dev
+          {username}
         </p>
 
         <p className="text-md font-[robolight]  text-[#8989E4] mb-4 text-center px-3">

@@ -1,14 +1,17 @@
-"use client"
-import { useRouter } from "next/router"
+'use client'
 
-const page = () => {
-    // const URL = 'https://nuna-core-server.onrender.com/'
-        const router = useRouter()
-        const { token } = router.query
+import { useSearchParams } from 'next/navigation'
 
-    return (
-        <div>{0}</div>
-    )
+const Page = () => {
+  const searchParams = useSearchParams()
+  const token = searchParams.get('token')
+
+  return (
+    <div>
+      <h1>Verifying Token...</h1>
+      <p>Token: {token}</p>
+    </div>
+  )
 }
 
-export default page
+export default Page
