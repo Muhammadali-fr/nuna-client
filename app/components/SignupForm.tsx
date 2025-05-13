@@ -123,7 +123,8 @@ const SignupForm = () => {
                 value={userData.email}
                 onChange={(e) => {
                   setUserData({ ...userData, email: e.target.value });
-4                }}
+                  4;
+                }}
               />
             </section>
           </label>

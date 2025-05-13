@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 // components and libraryies
 import Image from "next/image";
@@ -25,17 +25,16 @@ const Sidebar = () => {
     <aside className="space-y-5 sticky top-5">
       {/* logo  */}
       <Link href={"/"} className="flex">
-        <Image
-          src={Logo}
-          width={48}
-          height={48}
-          alt="nuna logo"
-        />
+        <Image src={Logo} width={48} height={48} alt="nuna logo" />
       </Link>
 
       {/* Sidebar links  */}
       <ul className="space-y-2">
-        <li className={`hover:bg-[#1B1B2D] p-2 rounded-l-lg cursor-pointer ${pathname === "/" && "bg-[#1B1B2D]"}`}>
+        <li
+          className={`hover:bg-[#1B1B2D] p-2 rounded-l-lg cursor-pointer ${
+            pathname === "/" && "bg-[#1B1B2D]"
+          }`}
+        >
           <Link href="/" className="flex items-center gap-5">
             <Image src={home_ic} width={30} height={30} alt="home page" />
             <p className="font-bold text-lg">Home</p>
