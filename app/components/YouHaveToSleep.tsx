@@ -7,7 +7,7 @@ const YouHaveToSleep = () => {
   useEffect(() => {
     const now = new Date();
     const currentHour = now.getHours();
-    if (currentHour >= 22 || currentHour <= 2) {
+    if (currentHour >= 22 || currentHour <= 4) {
       setShowModal(true);
     }
   }, []);
