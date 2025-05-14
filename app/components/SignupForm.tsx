@@ -2,52 +2,74 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import axios from "axios";
 import { Slide, toast } from "react-toastify";
 import { Mail, User } from "lucide-react";
 
+// --- Types ---
+type FormData = {
+  name: string;
+  email: string;
+};
+
+type ToastType = "success" | "warn";
+
+// --- Config ---
+const TOAST_CONFIG = {
+  position: "top-center" as const,
+  autoClose: 300,
+  hideProgressBar: false,
+  closeOnClick: false,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "dark",
+  transition: Slide,
+};
+
+const API_URL = "https://nuna-core-server.onrender.com"; // Update with actual endpoint path if needed
+
+// --- Component ---
 const SignupForm = () => {
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [formData, setFormData] = useState<FormData>({ name: "", email: "" });
 
-  const showToast = (type: "success" | "warn", message: string) => {
-    const config = {
-      position: "top-center" as const,
-      autoClose: 300,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      transition: Slide,
-    };
-
-    toast[type](message, config);
+  // --- Toast Handler ---
+  const showToast = (type: ToastType, message: string) => {
+    toast[type](message, TOAST_CONFIG);
   };
 
-  const handleInputChange = (field: "name" | "email", value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  // --- Input Change Handler ---
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent) => {
+  // --- Submit Handler ---
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { name, email } = formData;
 
     if (!name || !email) {
-      showToast("warn", "Please fill in all fields!");
-      return;
+      return showToast("warn", "Please fill in all fields!");
     }
 
     if (!email.includes("@")) {
-      showToast("warn", "Please enter a valid email address.");
-      return;
+      return showToast("warn", "Please enter a valid email address.");
     }
 
-    console.log("Form submitted:", formData);
+    try {
+      const res = await axios.post(`${API_URL}/auth/register`, { name, email });
 
-    setFormData({ name: "", email: "" });
-
-    showToast("success", "Link sent successfully!");
+      if (res.status === 200) {
+        showToast("success", "Link sent successfully!");
+        setFormData({ name: "", email: "" });
+      } else {
+        showToast("warn", "Something went wrong. Try again.");
+      }
+    } catch (err: any) {
+      console.error("Signup error:", err);
+      showToast("warn", err.response?.data?.message || "Server error");
+    }
   };
 
   return (
@@ -59,7 +81,7 @@ const SignupForm = () => {
         We will send a magic link to your email. Just click it!
       </p>
 
-      <form onSubmit={handleSubmit} method="POST" className="w-1/2 mb-4 space-y-6">
+      <form onSubmit={handleSubmit} className="w-1/2 mb-4 space-y-6">
         {/* Name Field */}
         <div>
           <label htmlFor="user-name" className="text-[#8C8998] block mb-1.5">
