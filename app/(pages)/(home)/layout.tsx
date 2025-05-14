@@ -18,10 +18,10 @@ export default function HomeLayout({
     // 1. LocalStorage'dan tokenni olish
     const token = localStorage.getItem('token')
 
-    if (!token) {
-      router.push('/auth/login') // Agar token bo'lmasa, login sahifasiga yo'naltiramiz
-      return
-    }
+    // if (!token) {
+    //   router.push('/auth/login') // Agar token bo'lmasa, login sahifasiga yo'naltiramiz
+    //   return
+    // }
 
     // 2. Tokenni serverga yuborish
     const verifyToken = async () => {

@@ -28,32 +28,27 @@ interface ToastProviderProps {
 
 export default function ToastProvider({ children }: ToastProviderProps) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <link rel="icon" href="./logo_favicon.ico" sizes="" />
+    <div
+      className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-row h-screen w-screen`}
+    >
+      <Image src={palma} className="h-screen" alt="image" />
+      <div className="flex flex-col justify-between py-10 px-15 flex-1">
+        <Link href="/" className="inline-block">
+          <Image src={logo} alt="image" width={80} />
+        </Link>
 
-        <div className="flex flex-row h-screen w-screen">
-          <Image src={palma} className="h-screen" alt="image" />
-          <div className="flex flex-col justify-between py-10 px-15 flex-1">
-            <Link href="/" className="inline-block">
-              <Image src={logo} alt="image" width={80} />
-            </Link>
+        {children}
 
-            {children}
-
-            <div className="flex items-center justify-between w-full">
-              <p>
-                reach us:{" "}
-                <span className=" text-white/35">khamidov.ko@gmail.com</span>
-              </p>
-              <Link href="/terms">read our Philosophy</Link>
-            </div>
-          </div>
+        <div className="flex items-center justify-between w-full">
+          <p>
+            reach us:{" "}
+            <span className="text-white/35">khamidov.ko@gmail.com</span>
+          </p>
+          <Link href="/terms">read our Philosophy</Link>
         </div>
-        <ToastContainer />
-      </body>
-    </html>
+      </div>
+
+      <ToastContainer />
+    </div>
   );
 }

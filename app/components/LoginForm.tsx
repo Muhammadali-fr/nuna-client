@@ -11,7 +11,6 @@ const LoginForm = () => {
 
   const handelSubmit = () => {
     console.log(email);
-
   }
 
   return (
