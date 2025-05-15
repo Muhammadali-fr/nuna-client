@@ -1,3 +1,5 @@
+"use client"
+
 // shadcn select ui
 import {
   Select,
@@ -7,13 +9,13 @@ import {
   SelectValue,
 } from "@/app/reuseable/ui/select";
 
-// switch toogle
-import { Switch } from "@/app/reuseable/ui/switch";
-
 // lucide icons
 import { SquarePen, ImagePlus } from "lucide-react";
+import { useState } from "react";
 
 export default function CreatePost() {
+  const [formData, setFormData] = useState([]);
+
   return (
     <div className="w-[95%] mx-auto flex flex-col py-3 gap-3">
       <p className="text-2xl font-bold">New post</p>
