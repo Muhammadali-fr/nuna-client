@@ -22,6 +22,7 @@ const LoginForm = () => {
       };
       const responce = await authService.login(data);
       console.log(responce);
+      alert(responce.data.message)
     } catch (error) {
       console.log(error);
     } finally {
