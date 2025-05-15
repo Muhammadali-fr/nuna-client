@@ -1,6 +1,7 @@
 "use-client";
-import axios from "axios";
-import { Link, Loader, Mail } from "lucide-react";
+import authService from "@/app/api/services/authService";
+import { Loader, Mail } from "lucide-react";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const LoginForm = () => {
@@ -10,21 +11,17 @@ const LoginForm = () => {
   });
 
   const handleSubmit = async () => {
+    setLoading(true);
     if (formData.email.length === 0) {
       return alert("please check email");
     }
 
     try {
-      setLoading(true);
-      let res = await axios.post(
-        "https://nuna-core-server.onrender.com/auth/login",
-        formData
-      );
-
-      console.log(res);
-
-      // this is alert
-      alert(res.data.message);
+      const data = {
+        email: formData.email,
+      };
+      const responce = await authService.login(data);
+      console.log(responce);
     } catch (error) {
       console.log(error);
     } finally {
