@@ -1,46 +1,27 @@
-export const apiendpoin = {
-    // Home
-    home: "",
+const apiEndpoins = {
+  // Home
+  home: "/",
 
-    // Users and User details
-    getUsers: "users/all",
+  // auth
+  registerUser: "auth/register",
+  verifyMagicLink: "auth/verify-magic-link",
+  loginUser: "auth/login",
+  userProfile: "auth/profile",
 
-    // register user
-    registerUser: "auth/register",
+  // users
+  getOneUser: "users/:id",
+  getUsers: "users/all",
+  deleteUser: "users/delete/:id",
+  changeUserDetails: "users/update/:id",
 
-    // verify user
-    verifyMagicLink: "auth/verify-magic-link",
+  // collections
 
-    // login user
-    loginUser: "auth/login",
-
-    // user profile
-    userProfile: "auth/profile",
-
-
-    // only one user
-    getOneUser: "users/:id",
-
-    // delete user
-    deleteUser: "users/delete/:id",
-
-    // Change User Deatils
-    changeUserDetails: "users/update/:id",
-
-    // collections
-
-    // posts and post details
-    createNewPost: "posts/new",
-
-    // get all posts
-    getAllPosts: "posts/many",
-
-    // get only one post from  id
-    getOnePost: "posts/:id",
-
-    // update post
-    updatePost: "posts/update/:id",
-
-    // delete post
-    deletePost: "posts/remove/:id",
+  // posts
+  createNewPost: "posts/new",
+  getAllPosts: "posts/many",
+  getOnePost: "posts/:id",
+  updatePost: "posts/update/:id",
+  deletePost: "posts/remove/:id",
 };
+
+export default apiEndpoins;
