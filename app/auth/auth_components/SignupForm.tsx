@@ -38,7 +38,8 @@ const SignupForm = () => {
   // router
   const router = useRouter();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
     setLoader(true);
     try {
       const data = {

@@ -4,13 +4,13 @@ import Link from "next/link";
 import magic_stick from "@/app/icons/magic-stick.png";
 import Image from "next/image";
 
-const SuccessReg = () => {
+const SuccessReg = ({ email }: { email: string }) => {
   return (
     <div className="flex flex-col items-start gap-2">
       <Image alt="magic stick img" src={magic_stick} width={116} height={116} />
       <h1 className="text-5xl">Magic link sent to your email</h1>
       <p className="text-[#8C8998]">
-        we have send magic link to your email you can click it.
+        we have send magic link to {email} you can click it.
       </p>
       <Link href="https://gmail.com/" className="inline-block">
         Open Gmail page
