@@ -1,4 +1,5 @@
-import { useRouter } from "next/router";
+"use client"
+import { useRouter } from "next/navigation";
 import SuccessReg from "../auth_components/Success_reg";
 
 const page = () => {

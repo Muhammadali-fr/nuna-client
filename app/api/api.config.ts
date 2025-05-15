@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.SERVICE_BASE_URL,
+  baseURL: "https://nuna-core-server.onrender.com",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
