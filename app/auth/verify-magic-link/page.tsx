@@ -1,39 +1,40 @@
 "use client";
+import authService from "@/app/api/services/authService";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PacmanLoader } from "react-spinners";
 
 export default function Page() {
-  const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const searchParams = useSearchParams();
   const verToken = searchParams.get("token");
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     const verifyAndGetProfile = async () => {
-      setLoading(true);
+      setLoading1(true);
       try {
-        const res = await axios.get(`https://nuna-core-server.onrender.com/auth/verify-magic-link/?token=${verToken}`);
-        const token = res.data;
-        localStorage.setItem("token", token);
+        if (verToken) {
+          const res = await authService.verify(verToken);
+          const token = res.data;
+          localStorage.setItem("token", token);
+          setLoading1(false);
+          setLoading2(true);
+        }
 
-        // profile malumotlari 
-        const profileRes = await axios.get("https://nuna-core-server.onrender.com/auth/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-
-        setProfile(profileRes.data)
-        
-
+        const saved_token = localStorage.getItem("token");
+        if (saved_token) {
+          const profileRes = await authService.getProfile();
+          // shu joytida profileRes ni Redux ga saqlash kerak muhammadali aka
+        }
       } catch (error) {
         console.log(error);
-
-      } finally { setLoading(false) }
-    }
-
+      } finally {
+        setLoading2(false);
+      }
+    };
 
     if (verToken) {
       verifyAndGetProfile();
@@ -42,19 +43,22 @@ export default function Page() {
 
   return (
     <div className="flex flex-col items-start gap-2">
-      {loading ? <div className="flex flex-col items-start gap-2">
+      <div className="flex flex-col items-start gap-2">
         <PacmanLoader color="#ffffff" size={30} className="mb-3" />
-        <h1 className="text-[40px] leading-[100%] font-[robotobold] mb-2">
-          Registering you in...
-        </h1>
+        {loading1 && (
+          <h1 className="text-[40px] leading-[100%] font-[robotobold] mb-2">
+            Verifying your email...
+          </h1>
+        )}
+        {loading2 && (
+          <h1 className="text-[40px] leading-[100%] font-[robotobold] mb-2">
+            Loading your data...
+          </h1>
+        )}
         <p className="text-[#8C8998]">
           wait for register, and do not close the window
         </p>
-      </div> :
-      <div>
-        {profile && <p>Welcome, your name is </p>}
       </div>
-      }
     </div>
   );
 }

@@ -26,6 +26,14 @@ const authService = {
       throw err;
     }
   },
+
+  getProfile: async () => {
+    try {
+      return await api.get(apiEndpoints.userProfile);
+    } catch (err) {
+      throw err;
+    }
+  },
 };
 
 export default authService;
