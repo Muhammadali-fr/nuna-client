@@ -66,7 +66,7 @@ const SignupForm = () => {
         We will send a magic link to your email. Just click it!
       </p>
 
-      <form onSubmit={handleSubmit} className="w-1/2 mb-4 space-y-6">
+      <form onSubmit={handleSubmit} className="w-1/2 mb-4 space-y-4">
         <div className="space-y-3">
           <div>
             <label htmlFor="name" className="text-[#8C8998] block mb-1.5">
@@ -108,14 +108,14 @@ const SignupForm = () => {
 
         {/* Terms & Conditions */}
         <div className="flex items-center gap-2">
-          <label className="flex items-center gap-2 cursor-pointer">
+          {/* <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" className="input" />
             <span className="custom-checkbox" />
-          </label>
+          </label> */}
           <p className="text-[#8C8998] flex items-center gap-1 text-sm">
-            Allow all terms and cool stuff{" "}
+            You can read all terms of{" "}
             <Link href="/terms" className="text-blue-600 underline">
-              in Nuna
+              nuna
             </Link>
           </p>
         </div>
@@ -123,7 +123,7 @@ const SignupForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-64 pt-4 pb-3.5 bg-[#0C8CE9] rounded-md text-white"
+          className="w-64 py-3 bg-[#0C8CE9] rounded-md text-white"
         >
           {!loader ? "Receive Link" : <Loader />}
         </button>

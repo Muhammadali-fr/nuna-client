@@ -1,28 +1,24 @@
 "use-client";
 import authService from "@/app/api/services/authService";
-import { Loader, Mail } from "lucide-react";
+import Loader from "@/app/reuseable/Loader";
+import { Mail } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-  });
+  const [email, setEmail] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
     setLoading(true);
-    if (formData.email.length === 0) {
-      return alert("please check email");
-    }
-
     try {
       const data = {
-        email: formData.email,
+        email: email,
       };
       const responce = await authService.login(data);
       console.log(responce);
-      alert(responce.data.message)
+      alert(responce.data.message);
     } catch (error) {
       console.log(error);
     } finally {
@@ -30,57 +26,58 @@ const LoginForm = () => {
     }
   };
   return (
-    <div>
-      <h1 className="text-4xl font-bold mb-2">Log in without password</h1>
-      <p className="text-base text-gray-500 mb-8">
-        We will send a magic link to your email, just click it.
+    <div className="py-5">
+      <h1 className="text-[40px] leading-[100%] font-[robotobold] mb-2">
+        Login without password
+      </h1>
+      <p className="text-base text-[#8C8998] mb-8">
+        We will send a magic link to your email. Just click it!
       </p>
 
-      <form method="POST" className="w-1/2 mb-4">
-        <label htmlFor="email" className="block">
-          <span className="mb-2 text-gray-500 block">Your email</span>
-          <div className="flex items-center bg-gray-800 rounded-md px-4 space-x-4">
-            <Mail />
-            <input
-              id="email"
-              type="email"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-              placeholder="mail@example.com"
-              required
-              className="h-12 w-full bg-transparent outline-none text-white"
-            />
+      <form onSubmit={handleSubmit} className="w-1/2 mb-4 space-y-4">
+        <div className="space-y-3">
+          <div>
+            <label htmlFor="email" className="text-[#8C8998] block mb-1.5">
+              your email
+            </label>
+            <div className="bg-[#1B1B2D] flex items-center rounded-md px-4 space-x-4">
+              <Mail />
+              <input
+                id="email"
+                type="email"
+                placeholder="mail@example.com"
+                className="h-12 w-full bg-transparent outline-none text-white"
+                autoComplete="off"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
           </div>
-        </label>
-      </form>
+        </div>
 
-      <div className="flex flex-col items-start gap-2 mb-2">
-        <div className="flex items-start gap-2">
-          <label className="flex items-center">
+        {/* Terms & Conditions */}
+        <div className="flex items-center gap-2">
+          {/* <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" className="input" />
-            <span className="custom-checkbox"></span>
-          </label>
-          <p className="text-gray-500 flex items-center gap-1">
-            Allow all terms and cool stuff
+            <span className="custom-checkbox" />
+          </label> */}
+          <p className="text-[#8C8998] flex items-center gap-1 text-sm">
+            You can read all terms of{" "}
             <Link href="/terms" className="text-blue-600 underline">
-              in Nuna
+              nuna
             </Link>
           </p>
         </div>
-        <Link href="/terms" className="text-blue-600 ">
-          Do you already have an account?
-        </Link>
-      </div>
 
-      <button
-        type="submit"
-        onClick={handleSubmit}
-        className="w-[200px] h-[40px] rounded bg-[#0C8CE9] cursor-pointer hover:opacity-80 flex items-center justify-center"
-      >
-        {loading ? <Loader /> : <span>Receive Link</span>}
-      </button>
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-64 py-3 bg-[#0C8CE9] rounded-md text-white"
+        >
+          {!loading ? "Receive Link" : <Loader />}
+        </button>
+      </form>
     </div>
   );
 };
