@@ -5,7 +5,6 @@ import magic_stick from "@/app/icons/magic-stick.png";
 import Image from "next/image";
 
 const SuccessReg = ({ email }: { email: string }) => {
-  console.log(email);
 
   return (
     <div className="flex flex-col items-start gap-2">

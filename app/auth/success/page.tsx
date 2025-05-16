@@ -1,11 +1,16 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import SuccessReg from "../auth_components/Success_reg";
 
 const page = () => {
-  const router: any = useRouter();
-  const email: string = router.email;
-  console.log(email);
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+
+  const router = useRouter();
+
+  if (!email) {
+    return router.push("/auth/register");
+  }
 
   return (
     <div>
