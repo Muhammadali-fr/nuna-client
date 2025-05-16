@@ -1,7 +1,6 @@
 "use client";
 import authService from "@/app/api/services/authService";
-import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PacmanLoader } from "react-spinners";
 
@@ -10,7 +9,7 @@ export default function Page() {
   const [loading2, setLoading2] = useState(false);
   const searchParams = useSearchParams();
   const verToken = searchParams.get("token");
-  const [profile, setProfile] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const verifyAndGetProfile = async () => {
@@ -33,12 +32,14 @@ export default function Page() {
         console.log(error);
       } finally {
         setLoading2(false);
+        router.push("/")
       }
     };
 
     if (verToken) {
       verifyAndGetProfile();
     }
+
   }, [verToken]);
 
   return (
@@ -53,6 +54,11 @@ export default function Page() {
         {loading2 && (
           <h1 className="text-[40px] leading-[100%] font-[robotobold] mb-2">
             Loading your data...
+          </h1>
+        )}
+        {!loading1 && !loading2 && (
+          <h1 className="text-[40px] leading-[100%] font-[robotobold] mb-2">
+            Welcome to Nuna
           </h1>
         )}
         <p className="text-[#8C8998]">
