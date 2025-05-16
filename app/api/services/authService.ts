@@ -18,6 +18,14 @@ const authService = {
       throw err;
     }
   },
+
+  verify: async (token: string) => {
+    try {
+      return await api.get(`${apiEndpoints.verifyMagicLink}/?token=${token}`);
+    } catch (err) {
+      throw err;
+    }
+  },
 };
 
 export default authService;
