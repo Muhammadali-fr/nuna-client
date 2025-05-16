@@ -3,11 +3,13 @@ import authService from "@/app/api/services/authService";
 import Loader from "@/app/reuseable/Loader";
 import { Mail } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -17,10 +19,14 @@ const LoginForm = () => {
         email: email,
       };
       const responce = await authService.login(data);
+      if (responce) {
+        router.push(`/auth/success/?email=${email}`);
+      }
       console.log(responce);
       alert(responce.data.message);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      alert(error.response.data.message);
     } finally {
       setLoading(false);
     }

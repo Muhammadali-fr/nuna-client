@@ -8,6 +8,7 @@ export default function Page() {
   const [loading1, setLoading1] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const searchParams = useSearchParams();
+  const [name, setName] = useState("");
   const verToken = searchParams.get("token");
   const router = useRouter();
 
@@ -16,8 +17,9 @@ export default function Page() {
       setLoading1(true);
       try {
         if (verToken) {
-          const res = await authService.verify(verToken);
-          const token = res.data;
+          const res: any = await authService.verify(verToken);
+          const token: string = res;
+          console.log(token);
           localStorage.setItem("token", token);
           setLoading1(false);
           setLoading2(true);
@@ -25,21 +27,21 @@ export default function Page() {
 
         const saved_token = localStorage.getItem("token");
         if (saved_token) {
-          const profileRes = await authService.getProfile();
+          const profileRes: any = await authService.getProfile();
           // shu joytida profileRes ni Redux ga saqlash kerak muhammadali aka
+          setName(profileRes.name);
         }
       } catch (error) {
         console.log(error);
       } finally {
         setLoading2(false);
-        router.push("/")
+        router.push("/");
       }
     };
 
     if (verToken) {
       verifyAndGetProfile();
     }
-
   }, [verToken]);
 
   return (
@@ -56,9 +58,9 @@ export default function Page() {
             Loading your data...
           </h1>
         )}
-        {!loading1 && !loading2 && (
+        {!loading1 && !loading2 && name !== "" && (
           <h1 className="text-[40px] leading-[100%] font-[robotobold] mb-2">
-            Welcome to Nuna
+            Welcome to Nuna, {name}
           </h1>
         )}
         <p className="text-[#8C8998]">
