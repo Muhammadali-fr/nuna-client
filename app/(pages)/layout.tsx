@@ -1,14 +1,21 @@
+"use client"
+
 // components
 import LeftSidebar from "../components/LeftSidebar";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import YouHaveToSleep from "../components/YouHaveToSleep";
 
+
+
 export default function HomeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
+
+
   return (
     <div>
       {/* main  */}

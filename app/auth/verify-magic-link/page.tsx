@@ -4,6 +4,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PacmanLoader } from "react-spinners";
 
+// redex 
+import { useDispatch } from "react-redux";
+import { setUser } from "@/lib/store/feature/userSlice";
+
 export default function Page() {
   const [loading1, setLoading1] = useState(false);
   const [loading2, setLoading2] = useState(false);
@@ -11,6 +15,9 @@ export default function Page() {
   const [name, setName] = useState("");
   const verToken = searchParams.get("token");
   const router = useRouter();
+
+  // redux 
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const verifyAndGetProfile = async () => {
@@ -29,6 +36,10 @@ export default function Page() {
         if (saved_token) {
           const profileRes: any = await authService.getProfile();
           // shu joytida profileRes ni Redux ga saqlash kerak muhammadali aka
+
+        //  reduxga saqlandi 
+          dispatch(setUser(profileRes));
+          
           setName(profileRes.name);
         }
       } catch (error) {
