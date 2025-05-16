@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Slide, toast } from "react-toastify";
-import { Loader, Mail, User } from "lucide-react";
+import { Mail, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import authService from "@/app/api/services/authService";
+import Loader from "@/app/reuseable/Loader";
 
 // --- Types ---
 type FormData = {
@@ -122,7 +123,7 @@ const SignupForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="px-16 pt-4 pb-3.5 bg-[#0C8CE9] rounded-md text-white"
+          className="w-64 pt-4 pb-3.5 bg-[#0C8CE9] rounded-md text-white"
         >
           {!loader ? "Receive Link" : <Loader />}
         </button>
