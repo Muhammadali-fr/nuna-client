@@ -35,11 +35,9 @@ export default function Page() {
         const saved_token = localStorage.getItem("token");
         if (saved_token) {
           const profileRes: any = await authService.getProfile();
-          // shu joytida profileRes ni Redux ga saqlash kerak muhammadali aka
-
-        //  reduxga saqlandi 
+          //  reduxga saqlandi 
           dispatch(setUser(profileRes));
-          
+
           setName(profileRes.name);
         }
       } catch (error) {
