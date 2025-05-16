@@ -7,21 +7,38 @@ import { PacmanLoader } from "react-spinners";
 export default function Page() {
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const verToken = searchParams.get("token");
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    const getToken = async () => {
+    const verifyAndGetProfile = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`https://nuna-core-server.onrender.com/auth/verify-magic-link/?token=${token}`);
-        localStorage.setItem("token", res.data);
+        const res = await axios.get(`https://nuna-core-server.onrender.com/auth/verify-magic-link/?token=${verToken}`);
+        const token = res.data;
+        localStorage.setItem("token", token);
+
+        // profile malumotlari 
+        const profileRes = await axios.get("https://nuna-core-server.onrender.com/auth/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+        setProfile(profileRes.data)
+        
+
       } catch (error) {
         console.log(error);
 
       } finally { setLoading(false) }
     }
-    getToken()
-  }, []);
+
+
+    if (verToken) {
+      verifyAndGetProfile();
+    }
+  }, [verToken]);
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -33,8 +50,10 @@ export default function Page() {
         <p className="text-[#8C8998]">
           wait for register, and do not close the window
         </p>
-      </div> : 
-        <p>succesfully signed in</p>
+      </div> :
+      <div>
+        {profile && <p>Welcome, your name is </p>}
+      </div>
       }
     </div>
   );
