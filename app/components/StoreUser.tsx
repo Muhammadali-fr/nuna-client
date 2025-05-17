@@ -16,12 +16,12 @@ export default function StoreUser() {
             if (!token) {
                 return router.push('/auth/login');
             }
-
             try {
                 let res = await authService.getProfile();
                 dispatch(setUser(res));
             } catch (error) {
                 console.log(error, "this error while storing information");
+                return router.push('/auth/login');
 
             }
         }
