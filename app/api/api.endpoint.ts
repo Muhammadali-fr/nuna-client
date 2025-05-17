@@ -18,7 +18,7 @@ const apiEndpoins = {
 
   // posts
   createNewPost: "posts/new",
-  getAllPosts: "posts/many",
+  getManyPosts: "posts/many",
   getOnePost: "posts/:id",
   updatePost: "posts/update/:id",
   deletePost: "posts/remove/:id",
