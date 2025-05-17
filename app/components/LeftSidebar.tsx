@@ -22,7 +22,7 @@ import { RootState } from "@/lib/store/store";
 
 export default function LeftSidebar() {
 
-  const user = useSelector((state: RootState) => state.user.user)
+  const user:any = useSelector((state: RootState) => state.user.user)
 
   return (
     <aside className="w-full space-y-5 sticky top-5">
@@ -44,10 +44,10 @@ export default function LeftSidebar() {
 
             <div className="flex-1">
               {/* name  */}
-              <p className="truncate font-bold">Muhammadali Jamolov</p>
+              <p className="truncate font-bold">{user.name}</p>
 
               {/* username  */}
-              <p className="text-sm text-gray-400">mukhamadali.001</p>
+              <p className="text-sm text-gray-400">{user.username}</p>
             </div>
           </div>
           :

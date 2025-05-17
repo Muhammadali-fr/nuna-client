@@ -26,7 +26,6 @@ const LoginForm = () => {
       alert(responce.data.message);
     } catch (error: any) {
       console.log(error);
-      alert(error.response.data.message);
     } finally {
       setLoading(false);
     }
