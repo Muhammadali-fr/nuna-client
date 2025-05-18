@@ -28,12 +28,11 @@ export default function LeftSidebar() {
     <aside className="w-full space-y-5 sticky top-5">
       {/* profile informations */}
       <Link
-        href={user ? "/user/@username" : "/auth/login"}
+        href={user ? `/user/${user.username}` : "/auth/login"}
         className={`flex items-center gap-3 ${user && "hover:bg-[#1B1B2D]"} py-1 rounded-r-lg cursor-pointer px-3`}
       >
         {/* profile image  */}
-
-
+        
         {user ?
           <div className="flex gap-3">
             <Image

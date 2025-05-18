@@ -7,15 +7,19 @@ import userprph from "@/app/icons/user-pr-ph.jpg";
 import PostCard from "@/app/reuseable/PostCard";
 
 // useRouter
-import { useRouter } from "next/router";
 import { use } from "react";
+
+// useSelect
+import { RootState } from "@/lib/store/store";
+import { useSelector } from "react-redux";
 
 // components
 import HomeHeader from "@/app/reuseable/HomeHeader";
 
-const page = ({ params }:  { params: Promise<{ username: string }> }) => {
+const page = ({ params }: { params: Promise<{ username: string }> }) => {
+  const { username } = use(params);
 
-const {username} = use(params);
+  const user: any = useSelector((state: RootState) => state.user.user)
 
   return (
     <div className="">
