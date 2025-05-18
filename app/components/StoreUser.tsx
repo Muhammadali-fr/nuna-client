@@ -23,9 +23,8 @@ export default function StoreUser() {
                 return
             }
             try {
-                console.log("user malumotlari olinishni boshladi");
-
                 let res = await authService.getProfile();
+                console.log(res);
                 dispatch(setUser(res));
             } catch (error) {
                 console.log(error, "this error while storing information");

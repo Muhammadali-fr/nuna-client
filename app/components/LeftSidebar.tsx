@@ -38,16 +38,16 @@ export default function LeftSidebar() {
           <div className="flex gap-3">
             <Image
               className="w-[48px] h-[48px] rounded-full object-cover object-center"
-              src={ProfileImage}
+              src={user.profile || ProfileImage}
               alt="profile image"
             />
 
             <div className="flex-1">
               {/* name  */}
-              <p className="truncate font-bold">{user.name}</p>
+              <p className="truncate font-bold">{user.name || "name"}</p>
 
               {/* username  */}
-              <p className="text-sm text-gray-400">{user.username}</p>
+              <p className="text-sm text-gray-400">{user.username || "username"}</p>
             </div>
           </div>
           :
