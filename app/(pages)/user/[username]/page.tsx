@@ -20,7 +20,6 @@ const page = ({ params }: { params: Promise<{ username: string }> }) => {
   const { username } = use(params);
 
   const user: any = useSelector((state: RootState) => state.user.user);
-  console.log(user);
 
 
   return (
@@ -72,7 +71,7 @@ const page = ({ params }: { params: Promise<{ username: string }> }) => {
             <span className="text-[#8989E4]">· following</span>
           </span>
           <span>
-            <strong>12</strong> <span className="text-[#8989E4]">· posts</span>
+            <strong>{user ? user.post_count : "0"}</strong> <span className="text-[#8989E4]">· posts</span>
           </span>
         </div>
 
