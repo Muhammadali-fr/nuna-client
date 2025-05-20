@@ -13,7 +13,7 @@ import Image from 'next/image'
 export default function StoreUser() {
     const router = useRouter()
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const storeuserinfo = async () => {
@@ -23,13 +23,14 @@ export default function StoreUser() {
                 return
             }
             try {
+                setLoading(true)
                 let res = await authService.getProfile();
                 console.log(res);
                 dispatch(setUser(res));
             } catch (error) {
                 console.log(error, "this error while storing information");
                 return router.push('/auth/login');
-            } finally { setLoading(false) };
+            } finally { setLoading(false)};
         }
         storeuserinfo();
 
@@ -43,7 +44,6 @@ export default function StoreUser() {
                 <p>Nuna</p>
             </div>
         )
-
     }
 
     return null

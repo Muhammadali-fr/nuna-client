@@ -18,8 +18,14 @@ import setting_ic from "../icons/settings-ic.svg";
 import author_room from "../icons/author-room-ic.svg";
 import add_post_ic from "../icons/add-post-ic.svg";
 
+// redux 
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store/store";
+
 const Sidebar = () => {
   const pathname = usePathname();
+
+  const user: any = useSelector((state: RootState) => state.user.user);
 
   return (
     <aside className="space-y-5 sticky top-5">
@@ -31,9 +37,8 @@ const Sidebar = () => {
       {/* Sidebar links  */}
       <ul className="space-y-2">
         <li
-          className={`hover:bg-[#1B1B2D] p-2 rounded-l-lg cursor-pointer ${
-            pathname === "/" && "bg-[#1B1B2D]"
-          }`}
+          className={`hover:bg-[#1B1B2D] p-2 rounded-l-lg cursor-pointer ${pathname === "/" && "bg-[#1B1B2D]"
+            }`}
         >
           <Link href="/" className="flex items-center gap-5">
             <Image src={home_ic} width={30} height={30} alt="home page" />
@@ -55,12 +60,15 @@ const Sidebar = () => {
           </Link>
         </li>
 
-        <li className="hover:bg-[#1B1B2D] p-2 rounded-l-lg cursor-pointer">
-          <Link href="/user/@username" className="flex items-center gap-5">
-            <Image src={profile_ic} width={30} height={30} alt="home page" />
-            <p className="font-bold text-lg">My profile</p>
-          </Link>
-        </li>
+        {
+          user &&
+          <li className="hover:bg-[#1B1B2D] p-2 rounded-l-lg cursor-pointer">
+            <Link href={`/user/${user.username}`} className="flex items-center gap-5">
+              <Image src={profile_ic} width={30} height={30} alt="home page" />
+              <p className="font-bold text-lg">My profile</p>
+            </Link>
+          </li>
+        }
 
         <li className="hover:bg-[#1B1B2D] p-2 rounded-l-lg cursor-pointer">
           <Link href="/" className="flex items-center gap-5">

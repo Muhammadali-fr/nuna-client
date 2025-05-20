@@ -4,17 +4,12 @@
 import LeftSidebar from "../components/LeftSidebar";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import YouHaveToSleep from "../components/YouHaveToSleep";
-
-
 
 export default function HomeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
-
 
   return (
     <div>
@@ -32,7 +27,7 @@ export default function HomeLayout({
         <div className="max-w-[285px] w-full py-5">
           <LeftSidebar />
         </div>
-        <YouHaveToSleep />
+        
       </main>
     </div>
   );

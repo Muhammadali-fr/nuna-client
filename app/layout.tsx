@@ -44,7 +44,6 @@ export default async function RootLayout({
         <TopLoader />
         <ReduxProvider>
           <Storeuser />
-
           {children}
         </ReduxProvider>
         <ToastContainer />
