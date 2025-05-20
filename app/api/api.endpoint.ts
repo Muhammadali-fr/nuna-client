@@ -9,19 +9,19 @@ const apiEndpoins = {
   userProfile: "auth/profile",
 
   // users
-  getOneUser: "users/:id",
+  getOneUser: (username: string) => `users/${username}`,
   getUsers: "users/all",
-  deleteUser: "users/delete/:id",
-  changeUserDetails: "users/update/:id",
+  deleteUser: (id: number) => `users/delete/${id}`,
+  changeUserDetails: (id: number) => `users/update/${id}`,
 
   // collections
 
   // posts
   createNewPost: "posts/new",
-  getAllPosts: "posts/many",
-  getOnePost: "posts/:id",
-  updatePost: "posts/update/:id",
-  deletePost: "posts/remove/:id",
+  getManyPosts: "posts/many",
+  getOnePost: (id: number) => `posts/${id}`,
+  updatePost: (id: number) => `posts/update/${id}`,
+  deletePost: (id: number) => `posts/remove/${id}`,
 };
 
 export default apiEndpoins;

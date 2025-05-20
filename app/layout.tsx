@@ -1,4 +1,5 @@
 // app/layout.tsx
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./styles/globals.css";
@@ -7,6 +8,9 @@ import TopLoader from "./components/TopLoader";
 import Head from "next/head";
 
 import { ReduxProvider } from "../lib/store/ReduxProvider";
+
+// check is user logged in this component, people 
+import Storeuser from "./components/StoreUser";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +33,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+
     <html lang="en">
       <Head>
         <link rel="icon" type="image/svg" href="/favicon.svg" />
@@ -37,7 +42,10 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <TopLoader />
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <Storeuser />
+          {children}
+        </ReduxProvider>
         <ToastContainer />
       </body>
     </html>

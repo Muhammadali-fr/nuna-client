@@ -2,10 +2,15 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import axios from "axios";
 import { Slide, toast } from "react-toastify";
 import { Mail, User } from "lucide-react";
+<<<<<<< HEAD
 import authService from "@/app/api/services/authService";
+=======
+import { useRouter } from "next/navigation";
+import authService from "@/app/api/services/authService";
+import Loader from "@/app/reuseable/Loader";
+>>>>>>> f90ea1675fab1c7d4a7ca708b95755f4d234b0f4
 
 // --- Types ---
 type FormData = {
@@ -30,36 +35,20 @@ const TOAST_CONFIG = {
 
 const API_URL = process.env.VITE_API_BASE_URL // Update with actual endpoint path if needed
 
-// --- Component ---
 const SignupForm = () => {
-  const [formData, setFormData] = useState<FormData>({ name: "", email: "" });
+  const [loader, setLoader] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
-  // --- Toast Handler ---
-  const showToast = (type: ToastType, message: string) => {
-    toast[type](message, TOAST_CONFIG);
-  };
+  // router
+  const router = useRouter();
 
-  // --- Input Change Handler ---
-  const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  // --- Submit Handler ---
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-
-    const { name, email } = formData;
-
-    if (!name || !email) {
-      return showToast("warn", "Please fill in all fields!");
-    }
-
-    if (!email.includes("@")) {
-      return showToast("warn", "Please enter a valid email address.");
-    }
-
+    setLoader(true);
     try {
       const data = {
+<<<<<<< HEAD
         name: formData.name,
         email: formData.email,
       };
@@ -69,9 +58,21 @@ const SignupForm = () => {
     } catch (err: any) {
       console.error("Signup error:", err);
       showToast("warn", err.response?.data?.message || "Server error");
+=======
+        name: name,
+        email: email,
+      };
+      const res: any = await authService.register(data);
+      if (res.message) {
+        router.push(`/auth/success/?email=${email}`);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoader(false);
+>>>>>>> f90ea1675fab1c7d4a7ca708b95755f4d234b0f4
     }
   };
-
   return (
     <div className="py-5">
       <h1 className="text-[40px] leading-[100%] font-[robotobold] mb-2">
@@ -81,57 +82,56 @@ const SignupForm = () => {
         We will send a magic link to your email. Just click it!
       </p>
 
-      <form onSubmit={handleSubmit} className="w-1/2 mb-4 space-y-6">
-        {/* Name Field */}
-        <div>
-          <label htmlFor="user-name" className="text-[#8C8998] block mb-1.5">
-            Your name
-          </label>
-          <div className="bg-[#1B1B2D] flex items-center rounded-md px-4 space-x-4">
-            <User />
-            <input
-              id="user-name"
-              type="text"
-              placeholder="John Doe"
-              className="h-12 w-full bg-transparent outline-none text-white"
-              autoComplete="off"
-              value={formData.name}
-              onChange={(e) => handleInputChange("name", e.target.value)}
-              required
-            />
+      <form onSubmit={handleSubmit} className="w-1/2 mb-4 space-y-4">
+        <div className="space-y-3">
+          <div>
+            <label htmlFor="name" className="text-[#8C8998] block mb-1.5">
+              your name
+            </label>
+            <div className="bg-[#1B1B2D] flex items-center rounded-md px-4 space-x-4">
+              <User />
+              <input
+                id="name"
+                type="text"
+                placeholder="John doe"
+                className="h-12 w-full bg-transparent outline-none text-white"
+                autoComplete="off"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
           </div>
-        </div>
-
-        {/* Email Field */}
-        <div>
-          <label htmlFor="user-email" className="text-[#8C8998] block mb-1.5">
-            Your email
-          </label>
-          <div className="bg-[#1B1B2D] flex items-center rounded-md px-4 space-x-4">
-            <Mail />
-            <input
-              id="user-email"
-              type="email"
-              placeholder="mail@example.com"
-              className="h-12 w-full bg-transparent outline-none text-white"
-              autoComplete="off"
-              value={formData.email}
-              onChange={(e) => handleInputChange("email", e.target.value)}
-              required
-            />
+          <div>
+            <label htmlFor="email" className="text-[#8C8998] block mb-1.5">
+              your email
+            </label>
+            <div className="bg-[#1B1B2D] flex items-center rounded-md px-4 space-x-4">
+              <Mail />
+              <input
+                id="email"
+                type="email"
+                placeholder="mail@example.com"
+                className="h-12 w-full bg-transparent outline-none text-white"
+                autoComplete="off"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
           </div>
         </div>
 
         {/* Terms & Conditions */}
         <div className="flex items-center gap-2">
-          <label className="flex items-center gap-2 cursor-pointer">
+          {/* <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" className="input" />
             <span className="custom-checkbox" />
-          </label>
+          </label> */}
           <p className="text-[#8C8998] flex items-center gap-1 text-sm">
-            Allow all terms and cool stuff{" "}
+            You can read all terms of{" "}
             <Link href="/terms" className="text-blue-600 underline">
-              in Nuna
+              nuna
             </Link>
           </p>
         </div>
@@ -139,9 +139,9 @@ const SignupForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="px-16 pt-4 pb-3.5 bg-[#0C8CE9] rounded-md text-white"
+          className="w-64 py-3 bg-[#0C8CE9] rounded-md text-white"
         >
-          Receive Link
+          {!loader ? "Receive Link" : <Loader />}
         </button>
       </form>
     </div>

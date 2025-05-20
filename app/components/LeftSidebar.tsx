@@ -16,28 +16,45 @@ import { topics } from "../data/data";
 // components
 import Ads from "./Ads";
 
+// redux 
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store/store";
+
 export default function LeftSidebar() {
+
+  const user:any = useSelector((state: RootState) => state.user.user)
+
   return (
     <aside className="w-full space-y-5 sticky top-5">
       {/* profile informations */}
       <Link
-        href={"/user/@username"}
-        className="flex items-center gap-3 hover:bg-[#1B1B2D] py-1 rounded-r-lg cursor-pointer px-3"
+        href={user ? `/user/${user.username}` : "/auth/login"}
+        className={`flex items-center gap-3 ${user && "hover:bg-[#1B1B2D]"} py-1 rounded-r-lg cursor-pointer px-3`}
       >
         {/* profile image  */}
-        <Image
-          className="w-[48px] h-[48px] rounded-full object-cover object-center"
-          src={ProfileImage}
-          alt="profile image"
-        />
+        
+        {user ?
+          <div className="flex gap-3">
+            <Image
+              className="w-[48px] h-[48px] rounded-full object-cover object-center"
+              src={user.profile || ProfileImage}
+              alt="profile image"
+            />
 
-        <div className="flex-1">
-          {/* name  */}
-          <p className="truncate font-bold">Muhammadali Jamolov</p>
+            <div className="flex-1">
+              {/* name  */}
+              <p className="truncate font-bold">{user.name || "name"}</p>
 
-          {/* username  */}
-          <p className="text-sm text-gray-400">mukhamadali.001</p>
-        </div>
+              {/* username  */}
+              <p className="text-sm text-gray-400">{user.username || "username"}</p>
+            </div>
+          </div>
+          :
+
+          <button className="w-[95%] bg-[#0C8CE9] py-3 rounded-lg hover:opacity-90 cursor-pointer gap-3">
+           login now
+          </button>
+        }
       </Link>
 
       {/* topics  */}
