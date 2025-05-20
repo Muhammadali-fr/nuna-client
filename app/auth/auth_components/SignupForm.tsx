@@ -4,13 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { Slide, toast } from "react-toastify";
 import { Mail, User } from "lucide-react";
-<<<<<<< HEAD
-import authService from "@/app/api/services/authService";
-=======
 import { useRouter } from "next/navigation";
 import authService from "@/app/api/services/authService";
 import Loader from "@/app/reuseable/Loader";
->>>>>>> f90ea1675fab1c7d4a7ca708b95755f4d234b0f4
 
 // --- Types ---
 type FormData = {
@@ -48,17 +44,6 @@ const SignupForm = () => {
     setLoader(true);
     try {
       const data = {
-<<<<<<< HEAD
-        name: formData.name,
-        email: formData.email,
-      };
-      const responce = await authService.register(data);
-      console.log(responce);
-      alert(responce.data.message)
-    } catch (err: any) {
-      console.error("Signup error:", err);
-      showToast("warn", err.response?.data?.message || "Server error");
-=======
         name: name,
         email: email,
       };
@@ -70,7 +55,6 @@ const SignupForm = () => {
       console.log(err);
     } finally {
       setLoader(false);
->>>>>>> f90ea1675fab1c7d4a7ca708b95755f4d234b0f4
     }
   };
   return (
