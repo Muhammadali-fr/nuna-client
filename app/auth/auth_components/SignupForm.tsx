@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Slide, toast } from "react-toastify";
 import { Mail, User } from "lucide-react";
+import authService from "@/app/api/services/authService";
 
 // --- Types ---
 type FormData = {
@@ -27,7 +28,7 @@ const TOAST_CONFIG = {
   transition: Slide,
 };
 
-const API_URL = "https://nuna-core-server.onrender.com"; // Update with actual endpoint path if needed
+const API_URL = process.env.VITE_API_BASE_URL // Update with actual endpoint path if needed
 
 // --- Component ---
 const SignupForm = () => {
@@ -58,14 +59,13 @@ const SignupForm = () => {
     }
 
     try {
-      const res = await axios.post(`${API_URL}/auth/register`, { name, email });
-
-      if (res.status === 200) {
-        showToast("success", "Link sent successfully!");
-        setFormData({ name: "", email: "" });
-      } else {
-        showToast("warn", "Something went wrong. Try again.");
-      }
+      const data = {
+        name: formData.name,
+        email: formData.email,
+      };
+      const responce = await authService.register(data);
+      console.log(responce);
+      alert(responce.data.message)
     } catch (err: any) {
       console.error("Signup error:", err);
       showToast("warn", err.response?.data?.message || "Server error");
