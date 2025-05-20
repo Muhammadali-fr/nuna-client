@@ -19,7 +19,9 @@ import HomeHeader from "@/app/reuseable/HomeHeader";
 const page = ({ params }: { params: Promise<{ username: string }> }) => {
   const { username } = use(params);
 
-  const user: any = useSelector((state: RootState) => state.user.user)
+  const user: any = useSelector((state: RootState) => state.user.user);
+  console.log(user);
+
 
   return (
     <div className="">
@@ -46,20 +48,19 @@ const page = ({ params }: { params: Promise<{ username: string }> }) => {
       {/* user information */}
       <section className="text-center text-white">
         <h2 className="font-bold text-2xl first-letter:uppercase">
-          boburov.dev
+          {user ? user.name : "name"}
         </h2>
 
         <p className="text-base font-[roboregular] text-blue-400 ">
-          {username}
+          {user ? user.username : "username"}
         </p>
 
-        <p className="text-md font-[robolight]  text-[#8989E4] mb-4 text-center px-3">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        </p>
-
-        <p className="text-sm hover:underline text-white cursor-pointer mb-2">
-          more →
-        </p>
+        {
+          user &&
+          <p className="text-md font-[robolight]  text-[#8989E4] mb-4 text-center px-3">
+            {user.bio ? user.bio : "your bio appear here."}
+          </p>
+        }
 
         <div className="flex justify-center gap-4 mb-7 text-sm">
           <span>
