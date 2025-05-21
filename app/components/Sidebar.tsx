@@ -62,7 +62,7 @@ const Sidebar = () => {
 
         {
           user &&
-          <li className="hover:bg-[#1B1B2D] p-2 rounded-l-lg cursor-pointer">
+          <li className={`hover:bg-[#1B1B2D] p-2 rounded-l-lg cursor-pointer ${`/user/${user.username}` === pathname && "bg-[#1B1B2D]"}`}>
             <Link href={`/user/${user.username}`} className="flex items-center gap-5">
               <Image src={profile_ic} width={30} height={30} alt="home page" />
               <p className="font-bold text-lg">My profile</p>
