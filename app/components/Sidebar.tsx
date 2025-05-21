@@ -92,7 +92,7 @@ const Sidebar = () => {
         </li>
       </ul>
 
-      <Link href={"/create-post"}>
+      <Link href={"/create"}>
         <button className="w-[95%] flex items-center justify-center bg-[#0C8CE9] py-3 rounded-lg hover:opacity-90 cursor-pointer gap-3">
           <Image src={add_post_ic} width={24} height={24} alt="note icon" />
           add new post
