@@ -61,9 +61,11 @@ const Page = ({ params }: { params: Promise<{ username: string }> }) => {
       {/* Banner va profil rasmi */}
       <section className="relative w-full h-[250px] flex flex-col items-center -z-10">
         <Image
-          src={bannerbg}
+          src={userProfile.banner ? userProfile.banner : bannerbg}
           alt="Background"
           className="w-full h-2/3 object-cover"
+          width={1000}
+          height={1000}
         />
 
         <div className="w-32 h-32 z-10 rounded-full border-4 border-[#05050D] absolute bottom-3 overflow-hidden bg-[#05050D]">
@@ -107,7 +109,8 @@ const Page = ({ params }: { params: Promise<{ username: string }> }) => {
         </div>
 
         {
-          !me && <button className="text-white text-sm font-medium px-20 py-2 transition rounded mb-4 bg-[#0C8CE9] hover:bg-blue-500">
+          !me &&
+          <button className="w-[95%] mx-auto max-w-[155px] flex items-center justify-center bg-[#0C8CE9] py-3 rounded-lg hover:opacity-90 cursor-pointer gap-3">
             Follow
           </button>
         }
