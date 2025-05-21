@@ -31,7 +31,7 @@ export default function ToastProvider({ children }: ToastProviderProps) {
     <div
       className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-row h-screen w-screen`}
     >
-      {/* <Image src={palma} className="h-screen" alt="image" /> */}
+      <Image src={palma} className="h-screen" alt="image" />
       <div className="flex flex-col justify-between py-10 px-15 flex-1">
         <Link href="/" className="inline-block">
           <Image src={logo} alt="image" width={80} />
