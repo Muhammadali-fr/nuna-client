@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
+// import css 
 import "./styles/globals.css";
 
 import { ToastContainer } from "react-toastify";
@@ -8,10 +9,9 @@ import TopLoader from "./components/TopLoader";
 import { ReduxProvider } from "../lib/store/ReduxProvider";
 import Storeuser from "./components/StoreUser";
 
-// Load Montserrat font with weights 400 and 700, use swap for better performance
 const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-montserrat", // optional, for CSS var usage
+  variable: "--font-montserrat",
   display: "swap",
 });
 
@@ -25,6 +25,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html lang="en" className={montserrat.className}>
       <body>
