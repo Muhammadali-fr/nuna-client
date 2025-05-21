@@ -93,6 +93,7 @@ const Page = ({ params }: { params: Promise<{ username: string }> }) => {
           {userProfile.bio || "Sizning bio qisqacha bu yerda ko‘rinadi."}
         </p>
 
+        {/* counts here  */}
         <div className="flex justify-center gap-4 mb-7 text-sm">
           <span>
             <strong>{userProfile.followers || 0}</strong>{" "}
@@ -108,6 +109,7 @@ const Page = ({ params }: { params: Promise<{ username: string }> }) => {
           </span>
         </div>
 
+        {/* this me is find is this user is me or not if me is true doesnt show follow button  */}
         {
           !me &&
           <button className="w-[95%] mx-auto max-w-[155px] flex items-center justify-center bg-[#0C8CE9] py-3 rounded-lg hover:opacity-90 cursor-pointer gap-3">

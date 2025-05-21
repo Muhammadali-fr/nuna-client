@@ -2,32 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Slide, toast } from "react-toastify";
 import { Mail, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import authService from "@/app/api/services/authService";
 import Loader from "@/app/reuseable/Loader";
-
-// --- Types ---
-type FormData = {
-  name: string;
-  email: string;
-};
-
-type ToastType = "success" | "warn";
-
-// --- Config ---
-const TOAST_CONFIG = {
-  position: "top-center" as const,
-  autoClose: 300,
-  hideProgressBar: false,
-  closeOnClick: false,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "dark",
-  transition: Slide,
-};
 
 const API_URL = process.env.VITE_API_BASE_URL // Update with actual endpoint path if needed
 
