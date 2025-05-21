@@ -1,25 +1,18 @@
-// app/layout.tsx
-
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat } from "next/font/google";
+
 import "./styles/globals.css";
+
 import { ToastContainer } from "react-toastify";
 import TopLoader from "./components/TopLoader";
-import Head from "next/head";
-
 import { ReduxProvider } from "../lib/store/ReduxProvider";
-
-// check is user logged in this component, people 
 import Storeuser from "./components/StoreUser";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Load Montserrat font with weights 400 and 700, use swap for better performance
+const montserrat = Montserrat({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-montserrat", // optional, for CSS var usage
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -33,14 +26,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-
-    <html lang="en">
-      <Head>
-        <link rel="icon" type="image/svg" href="/favicon.svg" />
-      </Head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className={montserrat.className}>
+      <body>
         <TopLoader />
         <ReduxProvider>
           <Storeuser />
