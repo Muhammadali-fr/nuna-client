@@ -22,6 +22,8 @@ const apiEndpoins = {
   getOnePost: (id: number) => `posts/${id}`,
   updatePost: (id: number) => `posts/update/${id}`,
   deletePost: (id: number) => `posts/remove/${id}`,
+  getUsersPosts: (id: number) => `posts/user/${id}`,
+  getMyPosts: "posts/user/mine",
 };
 
 export default apiEndpoins;
