@@ -18,6 +18,22 @@ const postService = {
       throw err;
     }
   },
+
+  getUsersPosts: async (id: number) => {
+    try {
+      return await api.get(apiEndpoins.getUsersPosts(id));
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  getMyPosts: async () => {
+    try {
+      return await api.get(apiEndpoins.getMyPosts);
+    } catch (err) {
+      throw err;
+    }
+  },
 };
 
 export default postService;
