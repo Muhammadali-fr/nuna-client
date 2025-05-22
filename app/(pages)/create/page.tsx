@@ -14,7 +14,23 @@ import { SquarePen, ImagePlus } from "lucide-react";
 import { useState } from "react";
 
 export default function CreatePost() {
-  const [formData, setFormData] = useState([]);
+  const [title, setTitle] = useState("");
+  const [descr, setDescr] = useState("");
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // file input onchange 
+  const handleImageUpload = (e) => {
+    setLoading(true);
+    const files = Array.from(e.target.files);
+    const newImages = files.map(img => ({
+      img,
+      url: URL.createObjectURL(img)
+    }));
+    setImages(newImages);
+    setLoading(false);
+  }
+
 
   return (
     <div className="w-[95%] mx-auto flex flex-col py-3 gap-3">
@@ -30,27 +46,57 @@ export default function CreatePost() {
             placeholder="something cool"
             type="text"
             required
+            value={title}
+            onChange={e => setTitle(e.target.value)}
           />
         </label>
 
         {/* description */}
         <label className="space-y-1">
           <p className="text-[#8989E4] cursor-pointer">
-            description (optional)
+            description (optional) {loading && "loading"}
           </p>
           <textarea
+            value={descr}
+            onChange={e => setDescr(e.target.value)}
             placeholder="cool description"
             className="bg-[#1B1B2D] w-full min-h-[100px] max-h-[150px] rounded p-3"
           ></textarea>
         </label>
 
+        {/* show images  */}
+        {
+          images.length !== 0 &&
+          <div>
+            <p className="text-[#8989E4] cursor-pointer">
+              your images (you can select more at once)
+            </p>
+
+            <ul className="grid grid-cols-2 gap-5">
+              {
+                images.map((img, index) => (
+                  <li className="bg-[#1B1B2D] rounded" key={index}>
+                    <img className="w-full h-[200px] object-cover object-center rounded" src={img.url} alt="uploaded image" />
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        }
+
+
+
+        {/* image uploader  */}
         <label className="space-y-1">
           <p className="text-[#8989E4] cursor-pointer">image (optional)</p>
           <div className="w-full h-[250px] bg-[#1B1B2D] rounded text-[#8989E4] flex items-center justify-center flex-col gap-3 cursor-pointer select-none">
             <ImagePlus className="scale-200" />
             <p>Upload or drop image here</p>
           </div>
-          <input className="hidden" type="file" />
+          <input
+            multiple
+            onChange={handleImageUpload}
+            className="hidden" type="file" />
         </label>
 
         {/* select ui  */}
