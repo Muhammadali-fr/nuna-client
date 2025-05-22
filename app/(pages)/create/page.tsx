@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react";
+
 // shadcn select ui
 import {
   Select,
@@ -10,25 +12,22 @@ import {
 } from "@/app/reuseable/ui/select";
 
 // lucide icons
-import { SquarePen, ImagePlus } from "lucide-react";
-import { useState } from "react";
+import { SquarePen, ImagePlus, X } from "lucide-react";
+
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [descr, setDescr] = useState("");
   const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   // file input onchange 
-  const handleImageUpload = (e) => {
-    setLoading(true);
+  const handleImageUpload = (e: any) => {
     const files = Array.from(e.target.files);
     const newImages = files.map(img => ({
       img,
       url: URL.createObjectURL(img)
     }));
     setImages(newImages);
-    setLoading(false);
   }
 
 
@@ -54,7 +53,7 @@ export default function CreatePost() {
         {/* description */}
         <label className="space-y-1">
           <p className="text-[#8989E4] cursor-pointer">
-            description (optional) {loading && "loading"}
+            description (optional)
           </p>
           <textarea
             value={descr}
@@ -75,8 +74,11 @@ export default function CreatePost() {
             <ul className="grid grid-cols-2 gap-5">
               {
                 images.map((img, index) => (
-                  <li className="bg-[#1B1B2D] rounded" key={index}>
+                  <li className="bg-[#1B1B2D] rounded relative" key={index}>
                     <img className="w-full h-[200px] object-cover object-center rounded" src={img.url} alt="uploaded image" />
+                    <div title="remove" className="w-[20px] h-[20px] flex items-center justify-center rounded-full bg-red-700 hover:bg-red-500 cursor-pointer absolute top-1 right-1">
+                      <X className="scale-80" />
+                    </div>
                   </li>
                 ))
               }
