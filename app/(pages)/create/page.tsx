@@ -30,6 +30,11 @@ export default function CreatePost() {
     setImages(newImages);
   }
 
+  // handleRemove 
+  const handleRemoveImage = (id: number) => {
+    setImages(images.filter((_, index) => index !== id));
+  }
+
 
   return (
     <div className="w-[95%] mx-auto flex flex-col py-3 gap-3">
@@ -76,8 +81,8 @@ export default function CreatePost() {
                 images.map((img, index) => (
                   <li className="bg-[#1B1B2D] rounded relative" key={index}>
                     <img className="w-full h-[200px] object-cover object-center rounded" src={img.url} alt="uploaded image" />
-                    {index === 0 && <p className="absolute top-1 left-1 bg-[#0C8CE9] px-2 rounded text-sm">assosiy</p>}
-                    <div title="remove" className="w-[20px] h-[20px] flex items-center justify-center rounded-full bg-red-700 hover:bg-red-500 cursor-pointer absolute top-1 right-1">
+                    {index === 0 && <p className="absolute top-1 left-1 bg-[#0C8CE9] px-2 rounded text-sm">main</p>}
+                    <div onClick={() => handleRemoveImage(index)} title="remove" className="w-[20px] h-[20px] flex items-center justify-center rounded-full bg-red-700 hover:bg-red-500 cursor-pointer absolute top-1 right-1">
                       <X className="scale-80" />
                     </div>
                   </li>
@@ -86,8 +91,6 @@ export default function CreatePost() {
             </ul>
           </div>
         }
-
-
 
         {/* image uploader  */}
         <label className="space-y-1">
