@@ -21,8 +21,8 @@ export default function CreatePost() {
   const [images, setImages] = useState([]);
 
   // file input onchange 
-  const handleImageUpload = (e: any) => {
-    const files = Array.from(e.target.files);
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
     const newImages = files.map(img => ({
       img,
       url: URL.createObjectURL(img)
@@ -66,16 +66,17 @@ export default function CreatePost() {
         {/* show images  */}
         {
           images.length !== 0 &&
-          <div>
+          <div className="space-y-1">
             <p className="text-[#8989E4] cursor-pointer">
               your images (you can select more at once)
             </p>
 
-            <ul className="grid grid-cols-2 gap-5">
+            <ul className="grid grid-cols-2 gap-2">
               {
                 images.map((img, index) => (
                   <li className="bg-[#1B1B2D] rounded relative" key={index}>
                     <img className="w-full h-[200px] object-cover object-center rounded" src={img.url} alt="uploaded image" />
+                    {index === 0 && <p className="absolute top-1 left-1 bg-[#0C8CE9] px-2 rounded text-sm">assosiy</p>}
                     <div title="remove" className="w-[20px] h-[20px] flex items-center justify-center rounded-full bg-red-700 hover:bg-red-500 cursor-pointer absolute top-1 right-1">
                       <X className="scale-80" />
                     </div>
