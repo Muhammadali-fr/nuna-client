@@ -37,7 +37,7 @@ export default function LeftSidebar() {
           <div className="flex gap-3">
             <Image
               className="w-[48px] h-[48px] rounded-full object-cover object-center"
-              src={user.profile || ProfileImage}
+              src={user.profile?.thumbnail || ProfileImage}
               alt="profile image"
             />
 

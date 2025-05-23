@@ -37,6 +37,12 @@ const Page = ({ params }: { params: Promise<{ username: string }> }) => {
           setUserProfile(resuser);
           setMe(false)
         }
+
+        // try {
+
+        // } catch (error) {
+          
+        // }
       } catch (error) {
         console.error("Error fetching user:", error);
         setUserProfile(null);
