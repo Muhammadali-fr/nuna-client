@@ -7,8 +7,6 @@ import { useRouter } from "next/navigation";
 import authService from "@/app/api/services/authService";
 import Loader from "@/app/reuseable/Loader";
 
-const API_URL = process.env.VITE_API_BASE_URL // Update with actual endpoint path if needed
-
 const SignupForm = () => {
   const [loader, setLoader] = useState(false);
   const [name, setName] = useState("");

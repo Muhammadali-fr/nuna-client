@@ -9,7 +9,7 @@ const page = () => {
   const router = useRouter();
 
   if (!email) {
-    return router.push("/auth/register");
+    return router.push("/auth/login");
   }
 
   return (
