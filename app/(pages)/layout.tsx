@@ -4,6 +4,7 @@
 import LeftSidebar from "../components/LeftSidebar";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import StoreUser from "../components/StoreUser";
 
 export default function HomeLayout({
   children,
@@ -15,6 +16,7 @@ export default function HomeLayout({
     <div>
       {/* main  */}
       <main className=" flex justify-center">
+          <StoreUser />
         <div className="max-w-[285px] w-full py-5">
           <Sidebar />
         </div>
