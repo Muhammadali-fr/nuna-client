@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 // components
 import HomeHeader from "@/app/reuseable/HomeHeader";
 import userService from "@/app/api/services/userService";
+import postService from "@/app/api/services/postService";
 
 const Page = ({ params }: { params: Promise<{ username: string }> }) => {
   const { username } = use(params);
@@ -37,12 +38,6 @@ const Page = ({ params }: { params: Promise<{ username: string }> }) => {
           setUserProfile(resuser);
           setMe(false)
         }
-
-        // try {
-
-        // } catch (error) {
-          
-        // }
       } catch (error) {
         console.error("Error fetching user:", error);
         setUserProfile(null);
