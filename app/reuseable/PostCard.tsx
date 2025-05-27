@@ -1,6 +1,6 @@
 // next
 import Link from "next/link";
-import  { StaticImageData } from "next/image";
+import NextImage,{ StaticImageData } from "next/image";
 
 import { Image } from 'antd';
 
@@ -26,13 +26,13 @@ export default function Home({
     <div className="border-b border-[#30305D] flex justify-center">
       <div className="w-[95%] space-y-3 py-3">
         <Link href={`/${PostName}`} className="flex  items-center gap-3">
-          {/* <Image
+          <NextImage
             width={30}
             height={30}
             className="w-[30px] h-[30px] rounded-full object-cover object-center"
             src={UserImage}
             alt={PostName}
-          /> */}
+          />
           <p>{PostName}</p>
         </Link>
 
@@ -40,21 +40,23 @@ export default function Home({
         <p className=" text-lg font-semibold">{descr}</p>
 
         {/* image */}
-        {PostImage &&
+        {PostImage && (
           <div>
-            {PostImage.map((img: string, id: any) => {
-              <li key={id}>
-                {img &&
-                  <Image.PreviewGroup>
-                      <div>
-                        <Image src={img} />
-                      </div>
-                  </Image.PreviewGroup>
-                }
-              </li>
-            })}
+            {PostImage.map((img: string, id: number) => (
+              <div key={id} className="aspect-video overflow-hidden rounded-lg relative">
+                <Image
+                  className="w-full h-full object-cover"
+                  src={img}
+                  alt={PostName}
+                />
+                <div className="w-full h-full bg-black/70 absolute top-0 left-0 backdrop-blur-lg flex justify-center items-center">
+                  <Image className="h-full" src={img} alt={PostName} />
+                </div>
+              </div>
+            ))}
           </div>
-        }
+        )}
+
 
         {/* support  */}
         <div className="flex items-center justify-between py-2">
