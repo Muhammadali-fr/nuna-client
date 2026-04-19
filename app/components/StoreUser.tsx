@@ -19,7 +19,6 @@ export default function StoreUser() {
         const storeuserinfo = async () => {
             const token = localStorage.getItem('token');
             if (!token) {
-                router.push('/auth/login');
                 return
             }
             try {
@@ -29,7 +28,6 @@ export default function StoreUser() {
                 dispatch(setUser(res));
             } catch (error) {
                 console.log(error, "this error while storing information");
-                return router.push('/auth/login');
             } finally { setLoading(false)};
         }
         storeuserinfo();

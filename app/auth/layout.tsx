@@ -42,7 +42,7 @@ export default function ToastProvider({ children }: ToastProviderProps) {
         <div className="flex items-center justify-between w-full">
           <p>
             reach us:{" "}
-            <span className="text-white/35">khamidov.ko@gmail.com</span>
+            <span className="text-white/35">mukhammadali.jamolov@gmail.com</span>
           </p>
           <Link href="/terms">read our Philosophy</Link>
         </div>
