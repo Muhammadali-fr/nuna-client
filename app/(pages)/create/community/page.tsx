@@ -1,50 +1,79 @@
-"use client"
+"use client";
 
 // lucide icons
 import { SquarePen, ImagePlus, X } from "lucide-react";
 
 import { topics } from "@/app/data/data";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// ✅ TYPE for images
+type ImageType = {
+  img: File;
+  url: string;
+};
 
 export default function Community() {
-  const [communityName, setCommunityName] = useState("");
-  const [title, setTitle] = useState("");
-  const [descr, setDescr] = useState("");
-  const [communityIcon, setCommunityIcon] = useState(null);
-  const [banner, setbanner] = useState(null);
+  const [communityName, setCommunityName] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [descr, setDescr] = useState<string>("");
 
-  // comunityIcon change 
-  const handleIconChange = (e: any) => {
+  // ✅ FIXED TYPES
+  const [communityIcon, setCommunityIcon] = useState<ImageType | null>(null);
+  const [banner, setBanner] = useState<ImageType | null>(null);
+
+  // ✅ ICON CHANGE
+  const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+
     setCommunityIcon({
       img: file,
-      url: URL.createObjectURL(file)
-    })
-  }
+      url,
+    });
+  };
 
-  const handleBannerChange = (e: any) => {
+  // ✅ BANNER CHANGE
+  const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    setbanner({
-      img: file,
-      url: URL.createObjectURL(file),
-    })
-  }
+    if (!file) return;
 
+    const url = URL.createObjectURL(file);
+
+    setBanner({
+      img: file,
+      url,
+    });
+  };
+
+  // ✅ REMOVE BANNER
   const handleRemoveBanner = () => {
-    setbanner(null);
-  }
+    if (banner?.url) {
+      URL.revokeObjectURL(banner.url);
+    }
+    setBanner(null);
+  };
+
+  // ✅ CLEANUP (important)
+  useEffect(() => {
+    return () => {
+      if (communityIcon?.url) URL.revokeObjectURL(communityIcon.url);
+      if (banner?.url) URL.revokeObjectURL(banner.url);
+    };
+  }, [communityIcon, banner]);
 
   return (
     <div className="w-[95%] mx-auto flex flex-col gap-3 py-3">
       <p className="text-2xl font-bold">New community</p>
 
       <form className="flex flex-col gap-5">
-        {/* post title  */}
+        {/* title */}
         <label className="space-y-1">
-          <p className="text-[#8989E4] cursor-pointer">Collection title*</p>
+          <p className="text-[#8989E4]">Collection title*</p>
           <input
             value={title}
-            onChange={e => setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
             className="w-full bg-[#1B1B2D] p-3 rounded"
             placeholder="something cool"
             type="text"
@@ -54,104 +83,104 @@ export default function Community() {
 
         {/* description */}
         <label className="space-y-1">
-          <p className="text-[#8989E4] cursor-pointer">
+          <p className="text-[#8989E4]">
             Collection description (optional)
           </p>
           <textarea
             value={descr}
-            onChange={e => setDescr(e.target.value)}
+            onChange={(e) => setDescr(e.target.value)}
             placeholder="cool description"
             className="bg-[#1B1B2D] w-full min-h-[100px] max-h-[150px] rounded p-3"
-          ></textarea>
+          />
         </label>
 
-        {/* for icon  */}
-        <label className="space-y-3">
-          <p className="text-[#8989E4] cursor-pointer">Community icon* {communityIcon && "want different image click the image"}</p>
-          <div className="w-[145px] h-[145px] rounded-full bg-[#313145] flex items-center justify-center mx-auto">
-            {
-              communityIcon ? <img className="w-full h-full rounded-full object-center object-cover" src={communityIcon.url} alt="comunity icon img" />
-                :
-                <ImagePlus className="text-[#8989E4] scale-200" />
+        {/* icon */}
+        <label className="space-y-3 cursor-pointer">
+          <p className="text-[#8989E4]">
+            Community icon*{" "}
+            {communityIcon && "click to change"}
+          </p>
 
-            }
+          <div className="w-[145px] h-[145px] rounded-full bg-[#313145] flex items-center justify-center mx-auto overflow-hidden">
+            {communityIcon ? (
+              <img
+                className="w-full h-full object-cover"
+                src={communityIcon.url}
+                alt="community icon"
+              />
+            ) : (
+              <ImagePlus className="text-[#8989E4] scale-200" />
+            )}
           </div>
-          <input onChange={handleIconChange} className="hidden" type="file" />
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleIconChange}
+            className="hidden"
+          />
         </label>
 
-        {/* showing banner  */}
-        {
-          banner &&
+        {/* banner preview */}
+        {banner && (
           <div className="space-y-1">
-            <p className="text-[#8989E4] cursor-pointer">
-              your banner image
-            </p>
+            <p className="text-[#8989E4]">your banner image</p>
+
             <div className="bg-[#1B1B2D] rounded relative">
-              <img className="w-full h-[200px] object-cover object-center rounded" src={banner.url} alt="uploaded image" />
-              <div onClick={handleRemoveBanner} title="remove" className="w-[20px] h-[20px] flex items-center justify-center rounded-full bg-red-700 hover:bg-red-500 cursor-pointer absolute top-1 right-1">
-                <X className="scale-80" />
-              </div>
+              <img
+                className="w-full h-[200px] object-cover rounded"
+                src={banner.url}
+                alt="banner"
+              />
+
+              <button
+                type="button"
+                onClick={handleRemoveBanner}
+                className="absolute top-1 right-1 w-[22px] h-[22px] flex items-center justify-center bg-red-600 hover:bg-red-500 rounded-full"
+              >
+                <X size={14} />
+              </button>
             </div>
           </div>
-        }
+        )}
 
-        {/* for banner */}
-        <label className="space-y-1">
-          <p className="text-[#8989E4] cursor-pointer">Banner (optional)</p>
-          <div className="w-full h-[150px] bg-[#1B1B2D] rounded text-[#8989E4] flex items-center justify-center flex-col gap-3 cursor-pointer select-none">
+        {/* banner upload */}
+        <label className="space-y-1 cursor-pointer">
+          <p className="text-[#8989E4]">Banner (optional)</p>
+
+          <div className="w-full h-[150px] bg-[#1B1B2D] rounded flex flex-col items-center justify-center gap-3 text-[#8989E4]">
             <ImagePlus className="scale-200" />
             <p>Upload or drop image here</p>
           </div>
-          <input onChange={handleBannerChange} className="hidden" type="file" />
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleBannerChange}
+            className="hidden"
+          />
         </label>
 
-        {/* tags here 
+        {/* unique name */}
         <label className="space-y-1">
-          <p className="text-[#8989E4] cursor-pointer">Tags *</p>
-
-          <div className="w-full bg-[#1B1B2D] flex items-center justify-between gap-3 p-2 rounded-lg">
-            <Hash />
-            <input placeholder="New tags" className="flex-1 outline-none" type="text" />
-            <button className="w-[110px] flex items-center justify-center gap-1 rounded-lg cursor-pointer bg-[#0C8CE9] py-2 hover:opacity-90">
-              <SquarePen />
-              add
-            </button>
-          </div>
-        </label> */}
-
-        {/* added  tags 
-        <div className="space-y-2">
-          <p className="text-[20px] font-bold">added tags</p>
-
-          topics map here 
-          <div className="flex flex-wrap gap-2">
-            {topics.map((topic, id) => (
-              <span
-                key={id}
-                title={topic}
-                className="py-0.5 px-3 bg-[#1B1B2D] hover:bg-[#282849] rounded-3xl cursor-pointer"
-              >{`#${topic}`}</span>
-            ))}
-          </div>
-        </div> */}
-
-        {/* unique name  */}
-        <label className="space-y-1">
-          <p className="text-[#8989E4] cursor-pointer">
+          <p className="text-[#8989E4]">
             Community unique name*
           </p>
           <input
+            value={communityName}
+            onChange={(e) => setCommunityName(e.target.value)}
             className="w-full bg-[#1B1B2D] p-3 rounded"
             placeholder="something cool"
             type="text"
             required
           />
-          <p className="text-green-500">unique name is available</p>
-          <p className="text-red-500">unique name is not available</p>
         </label>
 
-        {/* btn  */}
-        <button className="w-full max-w-[300px] flex items-center justify-center bg-[#0C8CE9] py-3 rounded-lg hover:opacity-90 cursor-pointer gap-3 mx-auto">
+        {/* submit */}
+        <button
+          type="submit"
+          className="w-full max-w-[300px] mx-auto flex items-center justify-center gap-3 bg-[#0C8CE9] py-3 rounded-lg hover:opacity-90"
+        >
           <SquarePen />
           add new post
         </button>

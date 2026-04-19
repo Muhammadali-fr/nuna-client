@@ -1,18 +1,28 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import NextImage, { StaticImageData } from "next/image";
-import { Image } from 'antd';
+import { Image } from "antd";
 
 // lucide icons
 import { MessageSquare, ArrowBigUp, EllipsisVertical } from "lucide-react";
 
 // Swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
+type Props = {
+  PostName: string;
+  UserImage: string | StaticImageData;
+  descr: string;
+
+  // ✅ FIXED TYPE
+  PostImage: (string | StaticImageData)[];
+
+  SupportNumber: number;
+};
 
 export default function Home({
   PostName,
@@ -20,22 +30,16 @@ export default function Home({
   descr,
   PostImage,
   SupportNumber,
-}: {
-  PostName: string;
-  UserImage: string | StaticImageData;
-  descr: string;
-  PostImage: string[] | StaticImageData[];
-  SupportNumber: number;
-}) {
-
+}: Props) {
   return (
     <div className="border-b border-[#30305D] flex justify-center">
       <div className="w-[95%] space-y-3 py-3">
+        {/* user */}
         <Link href={`/${PostName}`} className="flex items-center gap-3">
           <NextImage
             width={30}
             height={30}
-            className="w-[30px] h-[30px] rounded-full object-cover object-center"
+            className="w-[30px] h-[30px] rounded-full object-cover"
             src={UserImage}
             alt={PostName}
           />
@@ -45,47 +49,53 @@ export default function Home({
         {/* descr */}
         <p className="text-lg font-semibold">{descr}</p>
 
-        {/* image swiper */}
-        {PostImage && PostImage.length > 0 && (
+        {/* swiper */}
+        {PostImage.length > 0 && (
           <div className="rounded-lg overflow-hidden">
             <Swiper
-              // navigation
               modules={[Pagination]}
               pagination={{ clickable: true }}
               loop
               spaceBetween={10}
               className="aspect-video rounded-lg"
             >
-              {PostImage.map((img, id) => (
-                <SwiperSlide key={id}>
-                  <div className="w-full h-full relative">
-                    <Image
-                      className="w-full h-full object-cover rounded-lg"
-                      src={img}
-                      alt={`${PostName}-${id}`}
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
+              {PostImage.map((img, id) => {
+                // ✅ normalize src
+                const src =
+                  typeof img === "string" ? img : img.src;
+
+                return (
+                  <SwiperSlide key={id}>
+                    <div className="w-full h-full relative">
+                      <Image
+                        className="w-full h-full object-cover rounded-lg"
+                        src={src}
+                        alt={`${PostName}-${id}`}
+                      />
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
           </div>
         )}
 
-        {/* support */}
+        {/* footer */}
         <div className="flex items-center justify-between py-2">
-          {/* comment */}
+          {/* comments */}
           <div className="flex items-center gap-1 text-[#8989E4] cursor-pointer select-none">
             <MessageSquare />
             <p>Comments</p>
           </div>
 
-          {/* support number */}
+          {/* support */}
           <div className="flex gap-5">
             <div className="flex items-center gap-1 cursor-pointer select-none">
               <ArrowBigUp className="text-[#8989E4]" />
               <span>{SupportNumber}</span>
             </div>
-            <button className="cursor-pointer">
+
+            <button type="button" className="cursor-pointer">
               <EllipsisVertical />
             </button>
           </div>

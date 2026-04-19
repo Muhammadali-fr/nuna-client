@@ -6,6 +6,7 @@ import Image from "next/image";
 import palma from "../icons/palmas.jpg";
 import logo from "../icons/logo.svg";
 import Link from "next/link";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,9 @@ export default function ToastProvider({ children }: ToastProviderProps) {
           <Image src={logo} alt="image" width={80} />
         </Link>
 
-        {children}
+        <Suspense fallback={null}>
+          {children}
+        </Suspense>
 
         <div className="flex items-center justify-between w-full">
           <p>
